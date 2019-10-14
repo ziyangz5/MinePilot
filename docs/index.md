@@ -32,6 +32,12 @@ This is a list:
 
 $$x^2 = y^2$$
 
+$$
+\begin{aligned}
+L(\pmb{y},\pmb{\hat{y}})=\sum_{i=0}^n\sum_{j=0}^m\textit{H}(y_{ij},\hat{y}_{ij})
+\end{aligned}
+$$
+
 
 Just getting started with Markdown?
 See the [HTML <-> Markdown Quick Reference (Cheat Sheet)][quickref].
