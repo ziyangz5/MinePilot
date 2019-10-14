@@ -2,4 +2,4 @@
 layout: default
 title: Proposal
 ---
-Test
+Test Information
