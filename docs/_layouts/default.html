@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ 'css/custom.css' | relative_url }}">
   </head>
   <body>
-
+    {% include mathjax.html %}
     {% assign current = page.url | downcase | split: '/' %}
     {% assign statusClass = 'disabled' %}
     {% assign proposalClass = 'disabled' %}
