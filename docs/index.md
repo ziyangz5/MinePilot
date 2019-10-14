@@ -7,9 +7,9 @@ Source code: https://github.com/ziyangz5/175Project (_fix this_)
 
 Reports:
 
-- [Proposal](proposal.html)
-- [Status](status.html)
-- [Final](final.html)
+- [Proposal](proposal.md)
+- [Status](status.md)
+- [Final](final.md)
 
 What's Markdown (`.md`)?
 
