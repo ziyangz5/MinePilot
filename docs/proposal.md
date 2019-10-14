@@ -1,6 +1,5 @@
 ---
 layout: default
-mathjax: true
 title: Proposal
 ---
 # Summary
