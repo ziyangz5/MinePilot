@@ -39,6 +39,13 @@
           {% assign finalClass = '' %}
       {% endif %}
     {% endfor %}
+    var renderFormula = function(){
+      MathJax.Hub.Queue(function(){
+        var math = MathJax.Hub.getAllJax("MathDiv")[0];
+        MathJax.Hub.Queue(["Text", math, formula.value]);
+        location.hash = formula.value;
+      });
+    };
     <!--h2>{% if current[1] == %} 5 {% endif %}</h2-->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
