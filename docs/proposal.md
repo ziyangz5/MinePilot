@@ -3,6 +3,7 @@ layout: default
 mathjax: true
 title: Proposal
 ---
+# MinePilot
 # Summary
 In this project, we plan to develop a autopilot system under Minecraft setting. We treat the main character "Steve" as a car by letting him ride a horse (or drive a car provided by mods), and let him run on serval designed maps. Our goal is to make our agent be able to avoid all obstacles (or even other agents) on the road, and reach the destination successfully as fast as possible. In our plan, we will use pixel of the screen as the input, and the output is the action that our agent should take such as speeding up, turning, and braking.
 # Algorithms
