@@ -2,45 +2,9 @@
 layout: default
 title:  Home
 ---
+Welcome!<br>
+The source code of our project can be found [here](https://github.com/ziyangz5/MinePilot/) !<br>
+Our status report is available [here](https://github.com/ziyangz5/MinePilot/) !
 
-Source code: https://github.com/ziyangz5/175Project (_fix this_)
-
-Reports:
-
-- [Proposal](proposal.html)
-- [Status](status.html)
-- [Final](final.html)
-
-What's Markdown (`.md`)?
-
-Markdown is markup that lets you write hypertext (HTML) documents
-in easy-to-read and easy-to-write plain text.
-No angle brackets `<></>` required for
-paragraphs, lists, blockquotes, tables, etc.
-
-
-This is a paragraph (in Markdown). Some more
-text here.
-
-This is another paragraph.
-
-This is a list:
-
-- Orange
-- Apple
-- Blueberry
-
-$$x^2 = y^2$$
-
-$$
-\begin{aligned}
-L(\pmb{y},\pmb{\hat{y}})=\sum_{i=0}^n\sum_{j=0}^m\textit{H}(y_{ij},\hat{y}_{ij})
-\end{aligned}
-$$
-
-
-Just getting started with Markdown?
-See the [HTML <-> Markdown Quick Reference (Cheat Sheet)][quickref].
-
-
-[quickref]: https://github.com/mundimark/quickrefs/blob/master/HTML.md
+# What is MinePilot?
+Maybe you have noticed that there are many red honda cars around campus with very strange "desks" on the ceiling of the cars. Those are self-driving cars! The "desks" on the cars are video cameras and radars. Isn't that cool that self-driving cars have been already around with us? We are very interested in how those "magics" are implemented; therefore, our project is a simple implementation of self-driving algorithm, and we call our agent **MinePilot**!. Our agent is being set on a road with some obstacles, and it needs to avoid these walls to reach the destination. We use convolutional neural network to give the agent "vision." It can see the world, and distinguish which part of the input is road, and which part is wall. We then use the Deep Q-Learning algorithm to teach our agent when to go right, and when to go left to avoid hitting the obstacles or driving off the road. If you want to know more about our project you can watch this [video](https://github.com/ziyangz5/MinePilot/)!<br>

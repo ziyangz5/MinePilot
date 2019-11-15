@@ -2,7 +2,7 @@
 # site.title
 
 title:    'MinePilot'
-subtitle: 'CS 175: Project in AI (in Minecraft)'
+subtitle: 'An End-to-End Automatic Obstacle Avoidance Agent based on Reinforcement Learning'
 
 
 #########################
