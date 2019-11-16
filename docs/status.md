@@ -24,14 +24,11 @@ We want the SNN (Segmentation Neural Network) to learn a very efficient represen
 ## Segmentation Neural Network
 The reason why the representation from SNN is more efficient is that there are only 5 possible values and 1 channel in its output. The 5 values are:
 
-<center>
-
 |                | 0   | 1                 | 2     | 3           | 4    |
 | -------------- | --- | ----------------- | ----- | ----------- | ---- |
 | **Represents** | sky | pillars and walls | grass | destination | road |
 {: .tablelines}
 
-</center>
 
 This representation is much more efficient than the original images (3 channels with 256 values).
 ### Data Generation
@@ -45,8 +42,10 @@ Then, we just scan the image pixel by pixel, and we set different threshold of R
 <div style="text-align:center"><img src="figures/fig_5.png"/></div>
 
 ### Network Structure and Loss Function
-We are using one of the most popular network structure, [ResNet50](https://arxiv.org/abs/1512.03385), to do the segmentation. This network can achieve a very high accuracy ([See Evaluation](#Evaluation)).
-
+We are using one of the most popular network structure, [ResNet50](https://arxiv.org/abs/1512.03385), to do the segmentation. This network can achieve a very high accuracy ([See Evaluation](#Evaluation)). We train the SNN by minimizing the pixel-wise cross entropy between the ground truth and our prediction. The pixel-wise cross entropy function is given below:
+$$
+L(\pmb{y},\pmb{\hat{y}})=\sum_{i=0}^n\sum_{j=0}^m\textit{H}(y_{ij},\hat{y}_{ij})
+$$
 
 ## Obstacle Avoidance
 TBD
@@ -54,9 +53,7 @@ TBD
 ## Quantitative Evaluation:
 In our project, we have two main algorithm: CNN and DQ-Learning. For the segmentation task, we want to minimize the following loss function given a $n\times m$ image:<br>
 
-$$
-L(\pmb{y},\pmb{\hat{y}})=\sum_{i=0}^n\sum_{j=0}^m\textit{H}(y_{ij},\hat{y}_{ij})
-$$
+
 
 where $\pmb{y}$ is labels in a 2D array, and $\pmb{\hat{y}}$ is our prediction. $\textit{H}$ is the cross entropy. Then, to evaluate the CNN model, we want to get a small loss value on the validation set, and also want to get high accuracy rate.<br>
 For DQ Learning, we set several different rewards. For example, if the agent hits the wall, it will get a negative reward $r_h$. If the agent reaches the destination, it will get a positive reward $r_d$. If the agent reaches the destination very fast, we may give it a big postive reward $r_{d+}$. We want the total reward $r_t$ to be as high as possible.
