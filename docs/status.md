@@ -4,13 +4,39 @@ mathjax: true
 title: Proposal
 ---
 # Summary
-In this project, we plan to develop a autopilot system under Minecraft setting. We treat the main character "Steve" as a car by letting him ride a horse (or drive a car provided by mods), and let him run on serval designed maps. Our goal is to make our agent be able to avoid all obstacles (or even other agents) on the road, and reach the destination successfully as fast as possible. In our plan, we will use pixel of the screen as the input, and the output is the action that our agent should take such as speeding up, turning, and braking.
-# Approch
-Our main algorithm first generate a map that have some random distribution of obstacles and roads. Then we will use convolutional neural network to do the segmentation of the images, and use deep Q-learning to learn how to take action.
-## Map Generator
-The map generator will randomly generate a map (a open space with roads and obstacles). The map has three different types of blocks: redstone_block, diamond_block, and iron_block. Iron block represents the obstacle that the car trying to avoid. Diamond block represents roads that the car can drive on, and redstone block represents the destination that the car should go to.
-## Segmentation on Map
-TBD
+In this project, we try to solve a sub-problem of the self-driving problem, which is automatic obstacle avoidance. We s treat the main character “Steve” as a car. For now, it goes forward at a constant speed, and it can either horizontally move to right, or horizontal move to left, or just go straight. We want it to avoid all obstacles set on a road, and reach the destination. The size of the road is 9 by 30, and there are 9 pillars as obstacles on the road. On the edge of the road, there are two iron walls to detect if the agent drives off the road. You can see the details of the map from the figure below:
+<div style="text-align:center"><img src="figures/fig_2.png" /></div>
+
+# Approach
+We are using two main algorithm for this project:
+1. Image Segmentation
+2. Deep Q-learning 
+
+We want the SNN (Segmentation Neural Network) to learn a very efficient representation of the input image ($256 \times 256$ pixels), and pass the output of SNN into the DQN (Deep Q Network). The reason why we are doing this is because we believe by using the high efficient representation from the SNN, DQN doesn't have to learn much image information representation in its CNN layers, which will improve the performance. (And this approach actually does improve the performance of the DQN, see this). 
+
+## Segmentation Neural Network
+The reason why the representation from SNN is more efficient is that there are only 5 possible values and 1 channel in its output. The 5 values are:
+<center>
+
+|                | 0   | 1                 | 2     | 3           | 4    |
+| -------------- | --- | ----------------- | ----- | ----------- | ---- |
+| **Represents** | sky | pillars and walls | grass | destination | road |
+</center>
+
+This representation is much more efficient than the original images (3 channels with 256 values).
+### Data Generation
+Since the SNN is trained by using supervised learning. The most important problem is how to get the dataset with enough data. We developed an approach to generate data by ourselves.<br>
+First, we generate $n$ random maps ($n=500$ in our case). Then, we replace the resource package of Minecraft to a pure color texture package made by ourselves(shown below) 
+<div style="text-align:center"><img src="figures/fig_3.png" width="400" height="400"/></div>
+
+Then, we just scan the image pixel by pixel, and we set different threshold of RGB values for types of blocks. Then, we final dataset looks like as shown below:
+<div style="text-align:center"><img src="figures/fig_4.png"/></div>
+<div style="text-align:center"><img src="figures/fig_5.png"/></div>
+
+### Network Structure and Loss Function
+We are using one of the most popular network structure, ResNet50, to do the segmentation.
+
+
 ## Obstacle Avoidance
 TBD
 # Evaluation

@@ -6,7 +6,7 @@ title:  Home
 
 Welcome!<br>
 The source code of our project can be found [here](https://github.com/ziyangz5/MinePilot/) !<br>
-Our status report is available [here](https://github.com/ziyangz5/MinePilot/) !
+Our status report is available [here](https://ziyangz5.github.io/MinePilot/status.html) !
 You can also watch our demonstration [video](https://www.youtube.com/watch?v=GvRxhDbpNqQ)
 
 # What is MinePilot?
