@@ -22,7 +22,7 @@ td {
 </style>
 
 # Summary
-In this project, we try to solve a sub-problem of the self-driving problem, which is automatic obstacle avoidance. We s treat the main character “Steve” as a car. For now, it goes forward at a constant speed, and it can either horizontally move to right, or horizontal move to left, or just go straight. We want it to avoid all obstacles set on a road, and reach the destination. The size of the road is 9 by 30, and there are 9 pillars as obstacles on the road. On the edge of the road, there are two iron walls to detect if the agent drives off the road. You can see the details of the map from the figure below:
+In this project, we try to solve a sub-problem of the self-driving problem, which is automatic obstacle avoidance. We s treat the main character “Steve” as a car. For now, it goes forward at a constant speed, and it can either horizontally move to right, or horizontal move to left, or just go straight. We want it to avoid all obstacles set on a road, and reach the destination. The destination is the red stone walls shown in the figure below. The size of the road is 9 by 30, and there are 9 pillars as obstacles on the road. On the edge of the road, there are two iron walls to detect if the agent drives off the road. You can see the details of the map from the figure below:
 <div style="text-align:center"><img src="figures/fig_2.png" /></div>
 
 # Approach
@@ -33,7 +33,7 @@ We are using two main algorithm for this project:
 We want the SNN (Segmentation Neural Network) to learn a very efficient representation of the input image ($256 \times 256$ pixels), and pass the output of SNN into the DQN (Deep Q Network). The reason why we are doing this is because we believe by using the high efficient representation from the SNN, DQN doesn't have to learn much image information representation in its CNN layers, which will improve the performance. (And this approach actually does improve the performance of the DQN, see this). 
 
 ## Segmentation Neural Network
-The reason why the representation from SNN is more efficient is that there are only 5 possible values and 1 channel in its output. The 5 values are:
+The SNN is used as a sensor of our agent. The reason why the representation from SNN is more efficient is that there are only 5 possible values and 1 channel in its output. The 5 values are:
 
 |                | &nbsp;0         | &nbsp;1                                 | &nbsp;2           | &nbsp;3                 | &nbsp;4          |
 | -------------- | --------------- | --------------------------------------- | ----------------- | ----------------------- | ---------------- |
@@ -78,6 +78,19 @@ Once got the segmentation from the SNN, our DQN needs to decide the action of ag
 | Action | Stop moving horizontally | Move left horizontally | Move right horizontally |
 {: .tablelines}
 
+### Reward Function
+We originally defined that the agent receives 200 points after reaching the destination, and receives -75 points after hitting the obstacles or going off the road. However, we found this reward function is very sparse. The agent may not be able to reach the destination for a very long time. Therefore, to encourage our agent to live longer and do less meaningless action, our reward function is defined as:
+
+$$
+R(s)=\left\{
+\begin{aligned}
+    200 &\ (\text{Agent reaches destination})\\
+    -75 &\ (\text{Collision happens})\\
+    7.5 &\ (\text{No action})\\
+    2.5 &\ (\text{Moving to the left or right})
+\end{aligned}
+\right.
+$$
 
 # Evaluation
 ## Quantitative Evaluation:
