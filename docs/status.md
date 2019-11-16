@@ -7,7 +7,9 @@ title: Proposal
 <style>
 .tablelines table, .tablelines td, .tablelines th {
         border: 1px solid black;
+        width: 100%;
         }
+    
 </style>
 
 # Summary
@@ -49,8 +51,8 @@ $$
 L(\pmb{y},\pmb{\hat{y}})=\sum_{i=0}^n\sum_{j=0}^m\textit{H}(y_{ij},\hat{y}_{ij})
 $$
 
-## Obstacle Avoidance
-TBD
+## Deep Q Network
+
 # Evaluation
 ## Quantitative Evaluation:
 In our project, we have two main algorithm: CNN and DQ-Learning. For the segmentation task, we want to minimize the following loss function given a $n\times m$ image:<br>
