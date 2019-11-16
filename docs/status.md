@@ -3,6 +3,13 @@ layout: default
 mathjax: true
 title: Proposal
 ---
+
+<style>
+.tablelines table, .tablelines td, .tablelines th {
+        border: 1px solid black;
+        }
+</style>
+
 # Summary
 In this project, we try to solve a sub-problem of the self-driving problem, which is automatic obstacle avoidance. We s treat the main character “Steve” as a car. For now, it goes forward at a constant speed, and it can either horizontally move to right, or horizontal move to left, or just go straight. We want it to avoid all obstacles set on a road, and reach the destination. The size of the road is 9 by 30, and there are 9 pillars as obstacles on the road. On the edge of the road, there are two iron walls to detect if the agent drives off the road. You can see the details of the map from the figure below:
 <div style="text-align:center"><img src="figures/fig_2.png" /></div>
@@ -20,6 +27,7 @@ The reason why the representation from SNN is more efficient is that there are o
 |                | 0   | 1                 | 2     | 3           | 4    |
 | -------------- | --- | ----------------- | ----- | ----------- | ---- |
 | **Represents** | sky | pillars and walls | grass | destination | road |
+{: .tablelines}
 
 This representation is much more efficient than the original images (3 channels with 256 values).
 ### Data Generation
@@ -33,7 +41,7 @@ Then, we just scan the image pixel by pixel, and we set different threshold of R
 <div style="text-align:center"><img src="figures/fig_5.png"/></div>
 
 ### Network Structure and Loss Function
-We are using one of the most popular network structure, ResNet50, to do the segmentation.
+We are using one of the most popular network structure, [ResNet50](https://arxiv.org/abs/1512.03385), to do the segmentation. This network can achieve a very high accuracy ([See Evaluation](#Evaluation)).
 
 
 ## Obstacle Avoidance
