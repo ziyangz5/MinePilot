@@ -65,7 +65,7 @@ $$
 L(\pmb{y},\pmb{\hat{y}})=\sum_{i=0}^c p_ilog(q_i)
 $$
 
-We use Adam as the optimizer, and trained only 10 epochs with batch size 4 under RTX 2080 graphics cards. After 10 epochs, the validation accuracy reached around 85%.
+We use Adam as the optimizer with learning rate = 0.0002, and trained only 10 epochs with batch size 4 under RTX 2080 graphics cards. After 10 epochs, the validation accuracy reached around 85%.
 
 
 ## Deep Q Network
@@ -100,9 +100,11 @@ The goal of Deep Q-learning is that instead of building a Q table, we want to fi
 $$
     \delta = Q(s,a)-(r+\gamma \underset{a}{\mathrm{max}}(Q(s',a)))
 $$
+
 <br>
 
 To train our model, we apply the Huber loss upon the $\delta$
+
 $$
 L(\delta)=\left\{
 \begin{aligned}
@@ -111,7 +113,9 @@ L(\delta)=\left\{
 \end{aligned}
 \right.
 $$
- We are using Huber loss because it would make the loss not very sensitive to outliers, and there might be some outliers in our context setting (see [Challenges](#remaining-goals-and-challenges)).
+
+ We are using Huber loss because it would make the loss not very sensitive to outliers, and there might be some outliers in our context setting (see [Challenges](#remaining-goals-and-challenges)).<br>
+ Then, we set our replay memory of DQN to 15000, and use Adam as our optimizer with learning rate = 0.0005. We set our $\gamma$ to $0.98$, and the $\epsilon$ is decreasing from $0.88$ to $0.05$. We used curriculum learning to help our policy converge. We first trained our agent on 7x10 maps with one pillar for 30 epochs, and then trained our agent on 7x20 maps with four pillars for 30 epochs. Finally, we put our agent in a 9x30 map with seven walls. The performance of our agent can be found [here]().
 
 
 # Evaluation
