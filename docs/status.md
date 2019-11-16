@@ -92,6 +92,21 @@ R(s)=\left\{
 \right.
 $$
 
+### Loss function and training
+The goal of Deep Q-learning is that instead of building a Q table, we want to find a Q function $Q^*$, and a policy $\pi^*$, so that $\pi^*(s)=\underset{s}{\mathrm{argmax}}(Q^*(s,a))$. $Q^*$ may be very complex, but according to universal approximation theorem, our network can fit the $Q^*$. Every epoch, we update the $Q^*$ by minimizing the loss function given below:<br>
+
+$$
+    \delta = Q(s,a)-(r+\gamma \underset{a}{\mathrm{max}}(Q(s',a)))
+$$
+<br>
+
+To train our model, we apply the Huber loss upon the $\delta$
+$$
+    a
+$$
+ We are using Huber loss because it would make the loss not very sensitive to outliers, and there might be some outliers in our context setting (see [Challenges](#remaining-goals-and-challenges)).
+
+
 # Evaluation
 ## Quantitative Evaluation:
 In our project, we have two main algorithm: CNN and DQ-Learning. For the segmentation task, we want to minimize the following loss function given a $n\times m$ image:<br>
