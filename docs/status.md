@@ -35,8 +35,8 @@ We want the SNN (Segmentation Neural Network) to learn a very efficient represen
 ## Segmentation Neural Network
 The reason why the representation from SNN is more efficient is that there are only 5 possible values and 1 channel in its output. The 5 values are:
 
-|                | &nbsp;0   | &nbsp;1                 | &nbsp;2     | &nbsp;3           | &nbsp;4    |
-| -------------- | --- | ----------------- | ----- | ----------- | ---- |
+|                | &nbsp;0         | &nbsp;1                                 | &nbsp;2           | &nbsp;3                 | &nbsp;4          |
+| -------------- | --------------- | --------------------------------------- | ----------------- | ----------------------- | ---------------- |
 | **Represents** | &nbsp;sky&nbsp; | &nbsp;pillars&nbsp;and&nbsp;walls&nbsp; | &nbsp;grass&nbsp; | &nbsp;destination&nbsp; | &nbsp;road&nbsp; |
 {: .tablelines}
 
@@ -52,21 +52,31 @@ First, we generate $n$ random maps ($n=500$ in our case). Then, we replace the r
 <br>
 Then, we just scan the image pixel by pixel, and we set different threshold of RGB values for types of blocks. Then, we final dataset looks like as shown below:
 <div style="text-align:center"><img src="figures/fig_4.png"/></div>
+<center>Input Data</center>
 <div style="text-align:center"><img src="figures/fig_5.png"/></div>
+<center>Ground Truth Labels</center> <br>
 
 ### Network Structure and Loss Function
 We are using one of the most popular network structure, [ResNet50](https://arxiv.org/abs/1512.03385), to do the segmentation. This network can achieve a very high accuracy ([See Evaluation](#Evaluation)). We train the SNN by minimizing the pixel-wise cross entropy between the ground truth and our prediction. The pixel-wise cross entropy function is given below:<br>
 
+<br>
+
 $$
-L(\pmb{y},\pmb{\hat{y}})=\sum_{i=0}^n\sum_{j=0}^m\textit{H}(y_{ij},\hat{y}_{ij})
+L(\pmb{y},\pmb{\hat{y}})=\sum_{i=0}^c p_ilog(q_i)
 $$
 
+We use Adam as the optimizer, and trained only 10 epochs with batch size 4 under RTX 2080 graphics cards. After 10 epochs, the validation accuracy reached around 85%.
 
 
 ## Deep Q Network
 
 ### Actions
-Once got the segmentation from the SNN, our DQN needs to decide the action of agent. For now, our agent only does discrete actions.
+Once got the segmentation from the SNN, our DQN needs to decide the action of agent. For now, our agent only does discrete actions. The actions can be:
+|        | 0                        | 1                      | 2                       |
+| ------ | ------------------------ | ---------------------- | ----------------------- |
+| Action | Stop moving horizontally | Move left horizontally | Move right horizontally |
+{: .tablelines}
+
 
 # Evaluation
 ## Quantitative Evaluation:
