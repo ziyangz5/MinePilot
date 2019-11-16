@@ -135,7 +135,7 @@ We also tracked the pixel-wise accuracy given by $a=\frac{1}{mn}\sum_{i=0}^n\sum
 
 You can also visually see that the performance of SNN is good:
 
-<div style="text-align:center"><img src="figures/fig_8.png" width="750" height="500"/></div>
+<div style="text-align:center"><img src="figures/fig_8.png" /></div>
 
 ## Deep Q Network
 
