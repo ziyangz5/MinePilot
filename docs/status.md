@@ -120,7 +120,7 @@ $$
 
  We are using Huber loss because it would make the loss not very sensitive to outliers, and there might be some outliers in our context setting (see [Challenges](#remaining-goals-and-challenges)).<br>
  Then, we set our replay memory of DQN to 15000, and use Adam as our optimizer with learning rate = 0.0005. We set our $\gamma$ to $0.98$, and the $\epsilon$ is decreasing from $0.88$ to $0.05$. <br>
- We used curriculum learning to help our policy converge. We first trained our agent on 7x10 maps with one pillar for 30 epochs, and then trained our agent on 7x20 maps with four pillars for 30 epochs. Finally, we put our agent in a 9x30 map with seven walls. The performance of our agent can be found in our demo video.
+ We used curriculum learning to help our policy converge. We first trained our agent on 7x10 maps with one pillar for 30 epochs, and then trained our agent on 7x20 maps with four pillars for 30 epochs. Finally, we put our agent in a 9x30 map with seven walls for 50 epochs. The performance of our agent can be found in our demo video.
 
 # Evaluation
 ## Segmentation Neural Network
@@ -133,12 +133,24 @@ We also tracked the pixel-wise accuracy given by $a=\frac{1}{mn}\sum_{i=0}^n\sum
 
 <div style="text-align:center"><img src="figures/fig_7.png" /></div>
 
-You can visually see that the performance of SNN is good:
+You can also visually see that the performance of SNN is good:
 
 <div style="text-align:center"><img src="figures/fig_8.png" /></div>
 
 ## Deep Q Network
 
+For DQN, we look at two metrics: how [rewards](#reward-function) change, and how [loss](#loss-function-and-training).<br>
+The loss function is very noisy, and it is normal in reinforcement learning since black box $R$ cannot lead the gradient of loss function to decrease very well. However, it is still decreasing.
+
+<div style="text-align:center"><img src="figures/fig_11.png" /></div>
+
+The change of rewards is very discrete, but in general it is increasing. Before 30 epochs, most of the rewards are below zero, and after 30 epochs, many rewards are very closet to 0. Also, after 40 epochs, the agent reaches the destination 5 times, and it reaches the destination 3 times continuously. We saved one of the parameters, and its performance can be found in our demo video.
+
+<div style="text-align:center"><img src="figures/fig_9.png" /></div>
+
+Compare with our current model, we also train a naive DQN without SNN providing the segmentation. We train it in the same way as we train our DQN with SNN, but the performance of naive DQN is not good. The agent of naive DQN never reaches the destination. The plot below is the rewards of the naive DQN:
+
+<div style="text-align:center"><img src="figures/fig_10.png" /></div>
 
 # Remaining Goals and Challenges
 The remaining challenges we have is that we need to implement the addtional feature of acceleration and braking of our agent to simulate the actual car feature in the reality. Our agent can currently avoid only one kind of obstacle (Iron block). So, our next challenge can be to train the agent to avoid different kind of obstacles (even agents, if possible).
