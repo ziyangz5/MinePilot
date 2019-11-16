@@ -35,7 +35,7 @@ We want the SNN (Segmentation Neural Network) to learn a very efficient represen
 ## Segmentation Neural Network
 The reason why the representation from SNN is more efficient is that there are only 5 possible values and 1 channel in its output. The 5 values are:
 
-|                | 0   | 1                 | 2     | 3           | 4    |
+|                | &nbsp;0   | &nbsp;1                 | &nbsp;2     | &nbsp;3           | &nbsp;4    |
 | -------------- | --- | ----------------- | ----- | ----------- | ---- |
 | **Represents** | &nbsp;sky&nbsp; | &nbsp;pillars&nbsp;and&nbsp;walls&nbsp; | &nbsp;grass&nbsp; | &nbsp;destination&nbsp; | &nbsp;road&nbsp; |
 {: .tablelines}
@@ -55,10 +55,13 @@ Then, we just scan the image pixel by pixel, and we set different threshold of R
 <div style="text-align:center"><img src="figures/fig_5.png"/></div>
 
 ### Network Structure and Loss Function
-We are using one of the most popular network structure, [ResNet50](https://arxiv.org/abs/1512.03385), to do the segmentation. This network can achieve a very high accuracy ([See Evaluation](#Evaluation)). We train the SNN by minimizing the pixel-wise cross entropy between the ground truth and our prediction. The pixel-wise cross entropy function is given below:
+We are using one of the most popular network structure, [ResNet50](https://arxiv.org/abs/1512.03385), to do the segmentation. This network can achieve a very high accuracy ([See Evaluation](#Evaluation)). We train the SNN by minimizing the pixel-wise cross entropy between the ground truth and our prediction. The pixel-wise cross entropy function is given below:<br>
+
 $$
 L(\pmb{y},\pmb{\hat{y}})=\sum_{i=0}^n\sum_{j=0}^m\textit{H}(y_{ij},\hat{y}_{ij})
 $$
+
+
 
 ## Deep Q Network
 
