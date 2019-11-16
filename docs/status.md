@@ -16,12 +16,10 @@ We want the SNN (Segmentation Neural Network) to learn a very efficient represen
 
 ## Segmentation Neural Network
 The reason why the representation from SNN is more efficient is that there are only 5 possible values and 1 channel in its output. The 5 values are:
-<center>
 
 |                | 0   | 1                 | 2     | 3           | 4    |
 | -------------- | --- | ----------------- | ----- | ----------- | ---- |
 | **Represents** | sky | pillars and walls | grass | destination | road |
-</center>
 
 This representation is much more efficient than the original images (3 channels with 256 values).
 ### Data Generation
@@ -29,6 +27,7 @@ Since the SNN is trained by using supervised learning. The most important proble
 First, we generate $n$ random maps ($n=500$ in our case). Then, we replace the resource package of Minecraft to a pure color texture package made by ourselves(shown below) 
 <div style="text-align:center"><img src="figures/fig_3.png" width="400" height="400"/></div>
 
+<br>
 Then, we just scan the image pixel by pixel, and we set different threshold of RGB values for types of blocks. Then, we final dataset looks like as shown below:
 <div style="text-align:center"><img src="figures/fig_4.png"/></div>
 <div style="text-align:center"><img src="figures/fig_5.png"/></div>
