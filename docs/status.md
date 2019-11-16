@@ -21,8 +21,12 @@ td {
     
 </style>
 
+# Video
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/GvRxhDbpNqQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 # Summary
-In this project, we try to solve a sub-problem of the self-driving problem, which is automatic obstacle avoidance. We s treat the main character “Steve” as a car. For now, it goes forward at a constant speed, and it can either horizontally move to right, or horizontal move to left, or just go straight. We want it to avoid all obstacles set on a road, and reach the destination. The destination is the red stone walls shown in the figure below. The size of the road is 9 by 30, and there are 9 pillars as obstacles on the road. On the edge of the road, there are two iron walls to detect if the agent drives off the road. You can see the details of the map from the figure below:
+In this project, we try to solve a sub-problem of the self-driving problem, which is automatic obstacle avoidance. We s treat the main character “Steve” as a car. For now, it goes forward at a constant speed. At the same time, it can either horizontally move to right, or horizontal move to left, or just go straight. We want it to avoid all obstacles set on a road, and reach the destination. The destination is the red stone walls shown in the figure below. The size of the road is 9 by 30, and there are 9 pillars as obstacles on the road. On the edge of the road, there are two iron walls to detect if the agent drives off the road. You can see the details of the map from the figure below:
 <div style="text-align:center"><img src="figures/fig_2.png" /></div>
 
 # Approach
@@ -115,23 +119,23 @@ L(\delta)=\left\{
 $$
 
  We are using Huber loss because it would make the loss not very sensitive to outliers, and there might be some outliers in our context setting (see [Challenges](#remaining-goals-and-challenges)).<br>
- Then, we set our replay memory of DQN to 15000, and use Adam as our optimizer with learning rate = 0.0005. We set our $\gamma$ to $0.98$, and the $\epsilon$ is decreasing from $0.88$ to $0.05$. We used curriculum learning to help our policy converge. We first trained our agent on 7x10 maps with one pillar for 30 epochs, and then trained our agent on 7x20 maps with four pillars for 30 epochs. Finally, we put our agent in a 9x30 map with seven walls. The performance of our agent can be found [here]().
-
+ Then, we set our replay memory of DQN to 15000, and use Adam as our optimizer with learning rate = 0.0005. We set our $\gamma$ to $0.98$, and the $\epsilon$ is decreasing from $0.88$ to $0.05$. <br>
+ We used curriculum learning to help our policy converge. We first trained our agent on 7x10 maps with one pillar for 30 epochs, and then trained our agent on 7x20 maps with four pillars for 30 epochs. Finally, we put our agent in a 9x30 map with seven walls. The performance of our agent can be found in our demo video.
 
 # Evaluation
-## Quantitative Evaluation:
-In our project, we have two main algorithm: CNN and DQ-Learning. For the segmentation task, we want to minimize the following loss function given a $n\times m$ image:<br>
+## Segmentation Neural Network
 
+For the SNN, we mainly look into two types of metrics: pixel-wise cross entropy loss, and pixel-wise accuracy.<br>
+We trained our for 50 epochs, and we find that the loss converged nicely:
+<div style="text-align:center"><img src="figures/fig_6.png" /></div>
 
+We also tracked the pixel-wise accuracy given by $a=\frac{1}{mn}\sum_{i=0}^n\sum_{j=0}(y_{ij}==\hat{y}_{ij})$. The validation accuracy is a little bit noisy but it is increasing, and reached $85\%$ which is good enough for us.
 
-where $\pmb{y}$ is labels in a 2D array, and $\pmb{\hat{y}}$ is our prediction. $\textit{H}$ is the cross entropy. Then, to evaluate the CNN model, we want to get a small loss value on the validation set, and also want to get high accuracy rate.<br>
-For DQ Learning, we set several different rewards. For example, if the agent hits the wall, it will get a negative reward $r_h$. If the agent reaches the destination, it will get a positive reward $r_d$. If the agent reaches the destination very fast, we may give it a big postive reward $r_{d+}$. We want the total reward $r_t$ to be as high as possible.
-## Qualitative analysis
-If our algorithms work well, we can expect our agent can avoid most of obstacles and reach the destination successfully. For our segmentation model, it should be able to tell which part is road, which part is sky, which part is walls on images. Then, it can give nice information (labels) to the DQ learning model. The DQ learning model should learn how to control the agent's speed and yaw rotation to maintain itself on the road, and avoid hitting the walls. Our best agent should avoid all the obstacles, and reach the destination in a short time (which means it almost never brakes).
+## Deep Q-Learning Network
 
 
 # Remaining Goals and Challenges
-The remaining challenges we have is that we need to implement the addtional feature of acceleration and braking of our agent to simulate the actual car feature in the reality. Our agent can currently avoid only one kind of obstacle (Iron block). So, our next challenge can be to train the agent to avoid differrnt kind of obstacles (even agents, if possible).
+The remaining challenges we have is that we need to implement the addtional feature of acceleration and braking of our agent to simulate the actual car feature in the reality. Our agent can currently avoid only one kind of obstacle (Iron block). So, our next challenge can be to train the agent to avoid different kind of obstacles (even agents, if possible).
 
 # Resources Used
 We have used Python Malmo module to simulate the car driving environment and to operate the Minecraft agent. We use PyTorch library to train our agent to avoid obstacles.
