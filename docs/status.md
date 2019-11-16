@@ -22,9 +22,9 @@ td {
 </style>
 
 # Video
-
+<center>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GvRxhDbpNqQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+</center>
 # Summary
 In this project, we try to solve a sub-problem of the self-driving problem, which is automatic obstacle avoidance. We s treat the main character “Steve” as a car. For now, it goes forward at a constant speed. At the same time, it can either horizontally move to right, or horizontal move to left, or just go straight. We want it to avoid all obstacles set on a road, and reach the destination. The destination is the red stone walls shown in the figure below. The size of the road is 9 by 30, and there are 9 pillars as obstacles on the road. On the edge of the road, there are two iron walls to detect if the agent drives off the road. You can see the details of the map from the figure below:
 <div style="text-align:center"><img src="figures/fig_2.png" /></div>
@@ -129,9 +129,15 @@ For the SNN, we mainly look into two types of metrics: pixel-wise cross entropy 
 We trained our for 50 epochs, and we find that the loss converged nicely:
 <div style="text-align:center"><img src="figures/fig_6.png" /></div>
 
-We also tracked the pixel-wise accuracy given by $a=\frac{1}{mn}\sum_{i=0}^n\sum_{j=0}(y_{ij}==\hat{y}_{ij})$. The validation accuracy is a little bit noisy but it is increasing, and reached $85\%$ which is good enough for us.
+We also tracked the pixel-wise accuracy given by $a=\frac{1}{mn}\sum_{i=0}^n\sum_{j=0}(y_{ij}==\hat{y}_{ij})$. The validation accuracy is a little bit noisy but it is increasing, and reached $86\%$ which is good enough for us.
 
-## Deep Q-Learning Network
+<div style="text-align:center"><img src="figures/fig_7.png" /></div>
+
+You can visually see that the performance of SNN is good:
+
+<div style="text-align:center"><img src="figures/fig_8.png" /></div>
+
+## Deep Q Network
 
 
 # Remaining Goals and Challenges
