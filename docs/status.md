@@ -7,8 +7,14 @@ title: Proposal
 <style>
 .tablelines table, .tablelines td, .tablelines th {
         border: 1px solid black;
-        width: 100%;
         }
+    table {
+  width: 100%;
+}
+
+th {
+  height: 50px;
+}
     
 </style>
 
@@ -52,6 +58,8 @@ L(\pmb{y},\pmb{\hat{y}})=\sum_{i=0}^n\sum_{j=0}^m\textit{H}(y_{ij},\hat{y}_{ij})
 $$
 
 ## Deep Q Network
+
+Once got the segmentation from the SNN, our DQN needs to decide the action of agent. 
 
 # Evaluation
 ## Quantitative Evaluation:
