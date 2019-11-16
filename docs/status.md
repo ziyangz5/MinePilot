@@ -88,7 +88,7 @@ We originally defined that the agent receives 200 points after reaching the dest
 $$
 R(s)=\left\{
 \begin{aligned}
-    200 &\ (\text{Agent reaches destination})\\
+    250 &\ (\text{Agent reaches destination})\\
     -75 &\ (\text{Collision happens})\\
     7.5 &\ (\text{No action})\\
     2.5 &\ (\text{Moving to the left or right})
@@ -153,7 +153,19 @@ Compare with our current model, we also train a naive DQN without SNN providing 
 <div style="text-align:center"><img src="figures/fig_10.png" width="750" height="500" /></div>
 
 # Remaining Goals and Challenges
-We have two major problems now. The first one is s
+## Problem for now
+We have two major problems now. The first one is the running time of SNN is too slow now. We want to give our agent more reaction time to let the agent move faster. Therefore, in our final project, we need to replace the ResNet50 to some smaller network structure without hurting much of the accuracy.<br>
+Also, our reward function is not smooth enough. We need to find a more reasonable reward function to measure our agent's performance. The current rewards function is still pretty sparse.
+## Goals and Challenges:
+The first goal of our final project is to let our agent drive on a larger maps with more obstacles. Then, the biggest goal of our AI is to simulate continuous action. We think we can try to implement discretized continuous action because it is more feasible. Our new actions would be:
+
+|        |      0     |             1            |             2            |         3         |         4         |
+|:------:|:----------:|:------------------------:|:------------------------:|:-----------------:|:-----------------:|
+| Action | Do nothing | Horizontal velocity -0.1 | Horizontal velocity +0.1 | Forward speed +0.1 | Forward speed -0.1 |
+{: .tablelines}
+
+This one is very challenging because continuous action is a very frontier topic of reinforcement learning. With our current model, I think it would be impossible to do it. However, we have two ideas about how to achieve it. The first one is we can try some different RL models, such as Actor-Critic model, and Deep Deterministic Policy Gradients  (DDPG). Especially for the DDPG, because it is designed for continuos action. Also, we want to implement imitation learning to improve our agent's performance.
 
 # Resources Used
-We have used Python Malmo module to simulate the car driving environment and to operate the Minecraft agent. We use PyTorch library to train our agent to avoid obstacles.
+We have used Python Malmo module to simulate the car driving environment and to operate the Minecraft agent. We use PyTorch library to train our agent to avoid obstacles.<br>
+The implementation of our DQN take [this](https://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html) as a reference.
