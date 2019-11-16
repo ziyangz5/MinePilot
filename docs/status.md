@@ -163,7 +163,7 @@ The first goal of our final project is to let our agent drive on a larger maps w
 |:------:|:----------:|:------------------------:|:------------------------:|:-----------------:|:-----------------:|
 | Action | Do nothing | Horizontal velocity -0.1 | Horizontal velocity +0.1 | Forward speed +0.1 | Forward speed -0.1 |
 {: .tablelines}
-
+<br>
 This one is very challenging because continuous action is a very frontier topic of reinforcement learning. With our current model, I think it would be impossible to do it. However, we have two ideas about how to achieve it. The first one is we can try some different RL models, such as Actor-Critic model, and Deep Deterministic Policy Gradients  (DDPG). Especially for the DDPG, because it is designed for continuos action. Also, we want to implement imitation learning to improve our agent's performance.
 
 # Resources Used
