@@ -72,6 +72,7 @@ We use Adam as the optimizer, and trained only 10 epochs with batch size 4 under
 
 ### Actions
 Once got the segmentation from the SNN, our DQN needs to decide the action of agent. For now, our agent only does discrete actions. The actions can be:
+
 |        | 0                        | 1                      | 2                       |
 | ------ | ------------------------ | ---------------------- | ----------------------- |
 | Action | Stop moving horizontally | Move left horizontally | Move right horizontally |
