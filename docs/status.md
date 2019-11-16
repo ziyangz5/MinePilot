@@ -15,6 +15,9 @@ title: Proposal
 th {
   height: 50px;
 }
+td {
+  height: 50px;
+}
     
 </style>
 
@@ -59,7 +62,8 @@ $$
 
 ## Deep Q Network
 
-Once got the segmentation from the SNN, our DQN needs to decide the action of agent. 
+### Actions
+Once got the segmentation from the SNN, our DQN needs to decide the action of agent. For now, our agent only does discrete actions.
 
 # Evaluation
 ## Quantitative Evaluation:
