@@ -26,8 +26,10 @@ The reason why the representation from SNN is more efficient is that there are o
 
 |                | 0   | 1                 | 2     | 3           | 4    |
 | -------------- | --- | ----------------- | ----- | ----------- | ---- |
-| **Represents** | sky | pillars and walls | grass | destination | road |
+| **Represents** | &nbsp;sky&nbsp; | &nbsp;pillars&nbsp;and&nbsp;walls&nbsp; | &nbsp;grass&nbsp; | &nbsp;destination&nbsp; | &nbsp;road&nbsp; |
 {: .tablelines}
+
+<br>
 
 
 This representation is much more efficient than the original images (3 channels with 256 values).
