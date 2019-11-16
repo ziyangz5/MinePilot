@@ -24,10 +24,14 @@ We want the SNN (Segmentation Neural Network) to learn a very efficient represen
 ## Segmentation Neural Network
 The reason why the representation from SNN is more efficient is that there are only 5 possible values and 1 channel in its output. The 5 values are:
 
+<center>
+
 |                | 0   | 1                 | 2     | 3           | 4    |
 | -------------- | --- | ----------------- | ----- | ----------- | ---- |
 | **Represents** | sky | pillars and walls | grass | destination | road |
 {: .tablelines}
+
+</center>
 
 This representation is much more efficient than the original images (3 channels with 256 values).
 ### Data Generation
