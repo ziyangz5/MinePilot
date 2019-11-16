@@ -3,6 +3,7 @@ layout: default
 title:  Home
 ---
 <div style="text-align:center"><img src="figures/logo.png" /></div>
+
 Welcome!<br>
 The source code of our project can be found [here](https://github.com/ziyangz5/MinePilot/) !<br>
 Our status report is available [here](https://github.com/ziyangz5/MinePilot/) !
