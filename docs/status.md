@@ -127,33 +127,33 @@ $$
 
 For the SNN, we mainly look into two types of metrics: pixel-wise cross entropy loss, and pixel-wise accuracy.<br>
 We trained our for 50 epochs, and we find that the loss converged nicely:
-<div style="text-align:center"><img src="figures/fig_6.png" /></div>
+<div style="text-align:center"><img src="figures/fig_6.png"  width="750" height="500"/></div>
 
 We also tracked the pixel-wise accuracy given by $a=\frac{1}{mn}\sum_{i=0}^n\sum_{j=0}(y_{ij}==\hat{y}_{ij})$. The validation accuracy is a little bit noisy but it is increasing, and reached $86\%$ which is good enough for us.
 
-<div style="text-align:center"><img src="figures/fig_7.png" /></div>
+<div style="text-align:center"><img src="figures/fig_7.png" width="750" height="500"/></div>
 
 You can also visually see that the performance of SNN is good:
 
-<div style="text-align:center"><img src="figures/fig_8.png" /></div>
+<div style="text-align:center"><img src="figures/fig_8.png" width="750" height="500"/></div>
 
 ## Deep Q Network
 
 For DQN, we look at two metrics: how [rewards](#reward-function) change, and how [loss](#loss-function-and-training).<br>
 The loss function is very noisy, and it is normal in reinforcement learning since black box $R$ cannot lead the gradient of loss function to decrease very well. However, it is still decreasing.
 
-<div style="text-align:center"><img src="figures/fig_11.png" width="900" height="600" /></div>
+<div style="text-align:center"><img src="figures/fig_11.png" width="750" height="500" /></div>
 
 The change of rewards is very discrete, but in general it is increasing. Before 30 epochs, most of the rewards are below zero, and after 30 epochs, many rewards are very closet to 0. Also, after 40 epochs, the agent reaches the destination 5 times, and it reaches the destination 3 times continuously. We saved one of the parameters, and its performance can be found in our demo video.
 
-<div style="text-align:center"><img src="figures/fig_9.png" width="900" height="600" /></div>
+<div style="text-align:center"><img src="figures/fig_9.png" width="750" height="500" /></div>
 
 Compare with our current model, we also train a naive DQN without SNN providing the segmentation. We train it in the same way as we train our DQN with SNN, but the performance of naive DQN is not good. The agent of naive DQN never reaches the destination. The plot below is the rewards of the naive DQN:
 
-<div style="text-align:center"><img src="figures/fig_10.png" width="900" height="600" /></div>
+<div style="text-align:center"><img src="figures/fig_10.png" width="750" height="500" /></div>
 
 # Remaining Goals and Challenges
-The remaining challenges we have is that we need to implement the addtional feature of acceleration and braking of our agent to simulate the actual car feature in the reality. Our agent can currently avoid only one kind of obstacle (Iron block). So, our next challenge can be to train the agent to avoid different kind of obstacles (even agents, if possible).
+We have two major problems now. The first one is s
 
 # Resources Used
 We have used Python Malmo module to simulate the car driving environment and to operate the Minecraft agent. We use PyTorch library to train our agent to avoid obstacles.
