@@ -1,7 +1,7 @@
 ---
 layout: default
 mathjax: true
-title: Proposal
+title: Status
 ---
 
 <style>
