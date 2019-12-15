@@ -42,7 +42,7 @@ We want to develop our agent in a way similar to modern self-driving solutions. 
 In this project, we use the following models to be baselines or to solve this problem:
 1. Random model (baseline 1)
 2. DQN without Segmentation Neural Network (SNN) (baseline 2)
-3. DQN with SNN. No continuos speed (model in status report. baseline 3)
+3. DQN with SNN. Speed fixed (model in status report. baseline 3)
 4. DQN with SNN and continuos speed. (final model)
 
 #### **Random model**
@@ -60,13 +60,13 @@ The Random model is a very simple baseline, it will only take action 1-5  random
 
 Our second baseline is a deep Q-learning network. The reinforcement learning part of this model is identical to our final model. The only difference between this model and the final model is that this model does not use SNN as a vision-preprocessing network. Since this model does not use SNN, it will have more reaction time than models with SNN because SNN is a relative large network, and requires much time to run. However, without SNN, the DQN must learn the representation of the image and the policy at the same time, which can be very hard. Also, since the learning of the DQN is based on a black box reward, the representation in convolutional layers might be very imprecise. The action of the model is defined [here](#random-model).<br><br>
 
-**Network structure** <br><br>
+**Network Structure** <br><br>
 
 The network contains two parts. The first part is a series 2D convolutional layers with max pooling. They take the original game screen as the input. The second part is fully connected layers. They take the result from the convolutional layers, and the current speed as the input, and output the action.
 
 <div style="text-align:center"><img src="figures_f/f2.png" /></div>
 
-**Reward function** <br><br>
+**Reward Function** <br><br>
 We want to define a non-sparse reward function. Therefore, we decide to use the current speed of the agent as the main reward. We use the 10 times of the speed subtracted from 1.6 to be the main reward. The reward will be negative if the speed is too slow. Also, we want to encourage our agent to avoid hitting pillars and do less meaningless actions. Therefore, we design the reward function as given below:
 
 $$
@@ -81,7 +81,7 @@ $$
 
 where $S$ indicates the forward speed, $S \in [0.1,0.8]$.<br><br>
 
-**Loss function**
+**Loss Function**
 <br><br>
 
 The goal of Deep Q-learning is that instead of building a Q table, we want to find a Q function $Q$, and a policy $\pi$, so that $\pi(s)=\underset{s}{\mathrm{argmax}}(Q(s,a))$. $Q$ may be very complex, but according to universal approximation theorem, our network can fit the $Q$. Every epoch, we update the $Q$ by minimizing the loss function given below:
@@ -105,6 +105,47 @@ L(\delta)=\left\{
 \right.
 $$
 
- We are using Huber loss because it would make the loss not very sensitive to outliers and more stable. The performance of this model 
+ We are using Huber loss because it would make the loss not very sensitive to outliers and more stable. The performance of this model is not very good which is described in [evaluation](#evaluation).
 
-#### **DQN with SNN (discrete speed)**
+#### **DQN with SNN (fixed forward speed)**
+
+Instead of taking the original image as input directly, we can train another neural network to do the image segmentation. It is very hard for a DQN to learn image representation. However, it will be much easier if we add a neural network which only learns how to represent image. Therefore, in our status report, we present a model which combines DQN and segmentation neural network. We use this model as a baseline here, since it can only change the direction of strafing without changing the forward speed. **The DQN part of this model is identical to [DQN without SNN](dqn-without-snn). Therefore, we only talk about SNN in this part**<br>
+In this model, the SNN is used as a sensor of our agent. The representation from SNN is more efficient than original image is because there are only 5 possible values and 1 channel in its output. The 5 values are:
+
+|                | &nbsp;0         | &nbsp;1                                 | &nbsp;2           | &nbsp;3                 | &nbsp;4          |
+| -------------- | --------------- | --------------------------------------- | ----------------- | ----------------------- | ---------------- |
+| **Represents** | &nbsp;sky&nbsp; | &nbsp;pillars&nbsp;and&nbsp;walls&nbsp; | &nbsp;grass&nbsp; | &nbsp;shoulder and outline walls&nbsp; | &nbsp;road&nbsp; |
+{: .tablelines}
+
+<br>
+This representation is much more efficient than the original images (3 channels with 256 values).
+<br><br>
+
+**Data Generation**<br><br>
+
+Since the SNN is trained by using supervised learning. The most important problem is how to get the dataset with enough data. We developed an approach to generate data by ourselves.<br>
+First, we generate $n$ random maps ($n=500$ in our case). Then, we replace the resource package of Minecraft to a pure color texture package made by ourselves(shown below) 
+<div style="text-align:center"><img src="figures_f/f3.png" width="400" height="333"/></div>
+
+<br>
+Then, we just scan the image pixel by pixel, and we set different threshold of RGB values for types of blocks. Then, we final dataset looks like as shown below:
+<div style="text-align:center"><img src="figures_f/f4.png"/></div>
+<center>Input Data</center>
+<div style="text-align:center"><img src="figures_f/f5.png"/></div>
+<center>Ground Truth Labels</center> <br>
+
+<br>
+
+**Network Structure and Loss Function**
+<br><br>
+We are using one of the most popular network structure, [ResNet50](https://arxiv.org/abs/1512.03385), to do the segmentation. This network can achieve a very high accuracy ([See Evaluation](#evaluation)). We train the SNN by minimizing the pixel-wise cross entropy between the ground truth and our prediction. The pixel-wise cross entropy function is given below:<br>
+
+<br>
+
+$$
+L(\pmb{y},\pmb{\hat{y}})=\sum_{i=0}^c p_ilog(q_i)
+$$
+
+We use Adam as the optimizer with learning rate = 0.0002, and trained only 10 epochs with batch size 4 under RTX 2080 graphics cards. After 10 epochs, the validation accuracy reached around 85%.
+
+#### **DQN with SNN and continuos speed**
