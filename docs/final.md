@@ -58,4 +58,16 @@ The Random model is a very simple baseline, it will only take action 1-5  random
 
 #### **DQN without SNN**
 
-Our second baseline is a very simple deep Q-learning network.
+Our second baseline is a deep Q-learning network. The reinforcement learning part of this model is identical to our final model. The only difference between this model and the final model is this model does not use SNN as a vision-preprocessing network.  The action of the model is defined [here](#Random-model).<br><br>
+**Reward function** <br><br>
+We want to define a non-sparse reward function. Therefore, we decide to use the current speed of the agent as the main reward. We use the 10 times of the speed subtracted from 1.6 to be the main reward. The reward will be negative if the speed is too slow. Also, we want to encourage our agent to live longer and do less meaningless action. Therefore, we design the reward function is given as:
+$$
+R(s)=\left\{
+\begin{aligned}
+    &(S\times 10)-1.6 \ (\text{No action})\\
+    &(S\times 10)-4.2 \ (\text{Any action is taken})\\
+    &-75\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\text{Collision happens})
+\end{aligned}
+\right.
+$$
+where $S$ indicates the forward speed, $S \in [0.1,0.8]$. 
