@@ -58,9 +58,12 @@ The Random model is a very simple baseline, it will only take action 1-5  random
 
 #### **DQN without SNN**
 
-Our second baseline is a deep Q-learning network. The reinforcement learning part of this model is identical to our final model. The only difference between this model and the final model is that this model does not use SNN as a vision-preprocessing network.  The action of the model is defined [here](#Random-model).<br><br>
+Our second baseline is a deep Q-learning network. The reinforcement learning part of this model is identical to our final model. The only difference between this model and the final model is that this model does not use SNN as a vision-preprocessing network. Since this model does not use SNN, it will have more reaction time than models with SNN because SNN is a relative large network, and requires much time to run. However, without SNN, the DQN must learn the representation of the image and the policy at the same time, which can be very hard. Also, since the learning of the DQN is based on a black box reward, the representation in convolutional layers might be very imprecise. The action of the model is defined [here](#Random-model).<br><br>
+
+**Network structure** <br><br>
+
 **Reward function** <br><br>
-We want to define a non-sparse reward function. Therefore, we decide to use the current speed of the agent as the main reward. We use the 10 times of the speed subtracted from 1.6 to be the main reward. The reward will be negative if the speed is too slow. Also, we want to encourage our agent to live longer and do less meaningless action. Therefore, we design the reward function as given below:
+We want to define a non-sparse reward function. Therefore, we decide to use the current speed of the agent as the main reward. We use the 10 times of the speed subtracted from 1.6 to be the main reward. The reward will be negative if the speed is too slow. Also, we want to encourage our agent to avoid hitting pillars and do less meaningless actions. Therefore, we design the reward function as given below:
 
 $$
 R(s)=\left\{
@@ -72,4 +75,32 @@ R(s)=\left\{
 \right.
 $$
 
-where $S$ indicates the forward speed, $S \in [0.1,0.8]$. 
+where $S$ indicates the forward speed, $S \in [0.1,0.8]$.<br><br>
+
+**Loss function**
+<br><br>
+
+The goal of Deep Q-learning is that instead of building a Q table, we want to find a Q function $Q$, and a policy $\pi$, so that $\pi(s)=\underset{s}{\mathrm{argmax}}(Q(s,a))$. $Q$ may be very complex, but according to universal approximation theorem, our network can fit the $Q$. Every epoch, we update the $Q$ by minimizing the loss function given below:
+
+<br>
+
+$$
+    \delta = Q(s,a)-(r+\gamma \underset{a}{\mathrm{max}}(Q(s',a)))
+$$
+
+<br>
+
+To train our model, we apply the Huber loss upon the $\delta$
+
+$$
+L(\delta)=\left\{
+\begin{aligned}
+    0.5\delta^2 &\ \ \ \text{if |$\delta$|<1}\\
+    |\delta|-\frac{1}{2} &\ \ \ \text{Otherwise}\\ 
+\end{aligned}
+\right.
+$$
+
+ We are using Huber loss because it would make the loss not very sensitive to outliers and more stable. The performance of this model 
+
+#### DQN with SNN (discrete speed)
