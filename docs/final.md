@@ -109,7 +109,7 @@ $$
 
 #### **DQN with SNN (fixed forward speed)**
 
-Instead of taking the original image as input directly, we can train another neural network to do the image segmentation. It is very hard for a DQN to learn image representation. However, it will be much easier if we add a neural network which only learns how to represent image. Therefore, in our status report, we present a model which combines DQN and segmentation neural network. We use this model as a baseline here, since it can only change the direction of strafing without changing the forward speed. **The DQN part of this model is identical to [DQN without SNN](dqn-without-snn). Therefore, we only talk about SNN in this part**<br>
+Instead of taking the original image as input directly, we can train another neural network to do the image segmentation. It is very hard for a DQN to learn image representation. However, it will be much easier if we add a neural network which only learns how to represent image. Therefore, in our status report, we present a model which combines DQN and segmentation neural network. We use this model as a baseline here, since it can only change the direction of strafing without changing the forward speed. <br>
 In this model, the SNN is used as a sensor of our agent. The representation from SNN is more efficient than original image is because there are only 5 possible values and 1 channel in its output. The 5 values are:
 
 |                | &nbsp;0         | &nbsp;1                                 | &nbsp;2           | &nbsp;3                 | &nbsp;4          |
@@ -147,5 +147,28 @@ L(\pmb{y},\pmb{\hat{y}})=\sum_{i=0}^c p_ilog(q_i)
 $$
 
 We use Adam as the optimizer with learning rate = 0.0002, and trained only 10 epochs with batch size 4 under RTX 2080 graphics cards. After 10 epochs, the validation accuracy reached around 85%.
+<br><br>
+**DQN**
+<br><br>
+The DQN part of this model is almost identical to [DQN without SNN](dqn-without-snn). However, the action is defined as:
+
+|        | 0                        | 1                      | 2                       |
+| ------ | ------------------------ | ---------------------- | ----------------------- |
+| Action | Stop moving horizontally | Move left horizontally | Move right horizontally |
+{: .tablelines}
+
+<br>
+Also, the reward function is defined as:
+
+$$
+R(s)=\left\{
+\begin{aligned}
+    -75 &\ (\text{Collision happens})\\
+    7.5 &\ (\text{No action})\\
+    2.5 &\ (\text{Moving to the left or right})
+\end{aligned}
+\right.
+$$
+In this model, the forward speed is fixed at 0.35. When we increase this speed, the agent cannot adapt to the environment if there are obstacles because it cannot reduce its speed. The details can be found in [evaluation section](#evaluation).
 
 #### **DQN with SNN and continuos speed**
