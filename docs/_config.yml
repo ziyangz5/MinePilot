@@ -3,7 +3,7 @@
 
 title:    'MinePilot'
 subtitle: 'An End-to-End Automatic Obstacle Avoidance Agent'
-
+mathjax: true
 
 #########################
 # more settings
@@ -16,4 +16,3 @@ exclude:
 
 theme: jekyll-theme-slate
 
-mathjax: true
