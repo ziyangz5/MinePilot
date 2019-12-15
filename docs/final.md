@@ -23,7 +23,7 @@ td {
 
 ## Video
 
-# Project Summary
+## Project Summary
 In this project, we try to solve a sub-problem of the self-driving problem, which is automatic obstacle avoidance. We treat the main character “Steve” as a car. The agent can do the following action:
 1. Accelerating forward speed
 2. Reducing forward speed (braking)
