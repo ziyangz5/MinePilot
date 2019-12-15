@@ -45,7 +45,7 @@ In this project, we use the following models to be baselines or to solve this pr
 3. DQN with SNN. No continuos speed (model in status report. baseline 3)
 4. DQN with SNN and continuos speed. (final model)
 
-#### Random model
+### Random model
 As discussed above, our agent has 5 different actions described below:
 
 |        |      0     |             1            |             2            |         3         |         4         |
@@ -56,6 +56,6 @@ As discussed above, our agent has 5 different actions described below:
 <br>
 The Random model is a very simple baseline, it will only take action 1-5  randomly following a uniform distribution.
 
-#### DQN without SNN
+### DQN without SNN
 
 Our second baseline is a very simple deep Q-learning network.
