@@ -47,6 +47,7 @@ In this project, we use the following models to be baselines or to solve this pr
 
 #### Random model
 As discussed above, our agent has 5 different actions described below:
+
 |        |      0     |             1            |             2            |         3         |         4         |
 |:------:|:----------:|:------------------------:|:------------------------:|:-----------------:|:-----------------:|
 | Action | Do nothing/End moving horizontally | Horizontal velocity set to -0.25 | Horizontally velocity set to 0.25 | Forward speed +0.1 | Forward speed -0.1 |
