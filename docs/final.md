@@ -179,6 +179,14 @@ By studying the models we discussed above, we are able to find the best model am
 
 **Network Structure**
 
-Since now the forward speed is various. The agent needs more information about speed. Therefore, instead of feeding the model a single segmented image. We provide the model two channels of images. One is the current state, another is the previous state. The segmented images go through a series of CNN. The result of CNN would be computed by FC with numerical speed jointly. We are using SELU as the activation function except the last layer.
+Since now the forward speed is various. The agent needs more information about speed. Therefore, instead of feeding the model a single segmented image. We provide the model two channels of images. One is the current state, the other one is the previous state. The segmented images go through a series of CNN. The result of CNN would be computed by FC with numerical speed jointly. We are using SELU as the activation function except the last layer.
 
 <div style="text-align:center"><img src="figures_f/f6.png" /></div>
+
+**Training**
+
+At first, we found it is very hard to train with continuos speed. Therefore, we applied the curriculum learning to help us. We still fixed the length of the road ($9\times 150$), but we adjust the density of the pillars. At first, we only put one pillar in front of our agent and trained the model for 50 epochs. Then, we set 11 pillars on the road, and trained it for 50 epochs. At last, we set 22 pillars on the road, and trained it for 100 epochs to get our final model.</div>
+About our hyperparameter, we set our replay memory of DQN to 10000, and use Adam as our optimizer with learning rate = 0.00045 and weight decay = 0.001. We set our $\gamma$ to $0.98$, and the $\epsilon$ is decreasing from $0.88$ to $0.05$. <br>
+
+
+## Evaluation
