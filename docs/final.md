@@ -40,25 +40,24 @@ We want to develop our agent in a way similar to modern self-driving solutions. 
 ## Approaches
 
 In this project, we use the following models to be baselines or to solve this problem:
-1. Random model (baseline 1)
-2. DQN without Segmentation Neural Network (SNN) (baseline 2)
-3. DQN with SNN. Speed fixed (model in status report. baseline 3)
-4. DQN with SNN and continuos speed. (final model)
+1. DQN without Segmentation Neural Network (SNN) (baseline 1)
+2. DQN with SNN. Speed fixed (model in status report. baseline 2)
+3. DQN with SNN and continuos speed. (final model)
 
-#### **Random model**
+#### **DQN without SNN**
+
+Our first baseline is a deep Q-learning network. The reinforcement learning part of this model is identical to our final model. The only difference between this model and the final model is that this model does not use SNN as a vision-preprocessing network. Since this model does not use SNN, it will have more reaction time than models with SNN because SNN is a relative large network, and requires much time to run. However, without SNN, the DQN must learn the representation of the image and the policy at the same time, which can be very hard. Also, since the learning of the DQN is based on a black box reward, the representation in convolutional layers might be very imprecise.
+<br><br>
+
+**Action**<br><br>
+
+
 As discussed above, our agent has 5 different actions described below:
 
 |        |      0     |             1            |             2            |         3         |         4         |
 |:------:|:----------:|:------------------------:|:------------------------:|:-----------------:|:-----------------:|
 | Action | Do nothing/End moving horizontally | Horizontal velocity set to -0.25 | Horizontally velocity set to 0.25 | Forward speed +0.1 | Forward speed -0.1 |
 {: .tablelines}
-
-<br>
-The Random model is a very simple baseline, it will only take action 1-5  randomly following a uniform distribution.
-
-#### **DQN without SNN**
-
-Our second baseline is a deep Q-learning network. The reinforcement learning part of this model is identical to our final model. The only difference between this model and the final model is that this model does not use SNN as a vision-preprocessing network. Since this model does not use SNN, it will have more reaction time than models with SNN because SNN is a relative large network, and requires much time to run. However, without SNN, the DQN must learn the representation of the image and the policy at the same time, which can be very hard. Also, since the learning of the DQN is based on a black box reward, the representation in convolutional layers might be very imprecise. The action of the model is defined [here](#random-model).<br><br>
 
 **Network Structure** <br><br>
 
@@ -204,3 +203,20 @@ We also tracked the pixel-wise accuracy given by $a=\frac{1}{mn}\sum_{i=0}^n\sum
 You can also visually see that the performance of SNN is good:
 
 <div style="text-align:center"><img src="figures_f/f9.png" /></div>
+
+#### **DQN**
+
+For DQN, we look at two metrics: how far the distances the agents drive, and how [rewards](#dqn-without-snn) change.<br>
+The most important metric is the distance. We choose a random generated map, and try all three agents on that map for 75 epochs, and we record the distance the agent drove. The result is shown below:
+
+<div style="text-align:center"><img src="figures_f/f10.png" width="750" height="500"/></div>
+
+The found that the DQN without SNN performed the worst. It basically hits obstacles in a very short time. The DQN with SNN and fixed speed can avoid obstacles, but since its speed is fixed at $0.3$, it cannot drive very far. The DQN with SNN and variable speed is the best. It can reduce its speed when the density of obstacles is high, and increase its speed when the density is low,as shown in the [video](#video). The mean distance is also given below:
+
+<div style="text-align:center"><img src="figures_f/f11.png" width="750" height="500"/></div>
+
+We did another experiment. We randomly generate 10 maps, and trained our three models on them, and we record the maximum distance those three models can achieve. The result is given below:
+
+<div style="text-align:center"><img src="figures_f/f12.png" width="750" height="500"/></div>
+
+We find that our final model can reached the farthest distance among three models. We also tired to revise the speed of DQN with SNN and fixed speed. We found that if we set the speed of that model to the maximum speed (0.8), it achieves the worst distance between models. It is caused by that it does no have enough time to avoid obstacles since the speed is too high.
