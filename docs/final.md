@@ -66,7 +66,7 @@ The network contains two parts. The first part is a series 2D convolutional laye
 <div style="text-align:center"><img src="figures_f/f2.png" /></div>
 
 **Reward Function** <br><br>
-We want to define a non-sparse reward function. Therefore, we decide to use the current speed of the agent as the main reward. We use the 10 times of the speed subtracted from 1.6 to be the main reward. The reward will be negative if the speed is too slow. Also, we want to encourage our agent to avoid hitting pillars and do less meaningless actions. Therefore, we design the reward function as given below:
+We want to define a non-sparse reward function. Therefore, we decide to use the current speed of the agent as the main reward. We use the 10 times of the speed subtracted from 1.6 to be the main reward. The reward will be negative if the speed is too slow. Also, we want to encourage our agent to avoid hitting pillars and do less meaningless actions. Therefore, we used reward shaping method, and design the reward function as given below:
 
 $$
 R(s)=\left\{
@@ -219,4 +219,16 @@ We did another experiment. We randomly generate 10 maps, and trained our three m
 
 <div style="text-align:center"><img src="figures_f/f12.png" width="750" height="500"/></div>
 
-We find that our final model can reached the farthest distance among three models. We also tired to revise the speed of DQN with SNN and fixed speed. We found that if we set the speed of that model to the maximum speed (0.8), it achieves the worst distance between models. It is caused by that it does no have enough time to avoid obstacles since the speed is too high.
+We find that our final model can reached the farthest distance among three models (31.55). In our metrics, the theoretical farthest distance a model can reach in 30 seconds is 40;therefore, our final model has achieved a very good performance. We also tired to revise the speed of DQN with SNN and fixed speed. We found that if we set the speed of that model to the maximum speed (0.8), it achieves the worst distance among our models. It is caused by that it does no have enough time to avoid obstacles since the speed is too high.<br>
+We also look into the rewards. We found that the trend of the rewards is pretty similar to the distance, which is understandable because we basically use the distance as the rewards, but add some reward shaping terms:
+
+
+<div style="text-align:center"><img src="figures_f/f13.png" width="750" height="500"/></div>
+
+From the evaluation above, we are confident that our final DQN model basically solves the obstacle auto-avoidance problem under Minecraft setting.
+
+# References
+We have used Python Malmo module to simulate the car driving environment and to operate the Minecraft agent. We use PyTorch library to train our agent to avoid obstacles.<br>
+The implementation of our DQN take [this](https://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html) as a reference.<br>
+The ResNet50 we are using is introduced in this [this paper](https://arxiv.org/abs/1512.03385).<br>
+The Steven image on home page is from [this source](https://free3d.com/3d-model/minecraft-steve-2569.html)
