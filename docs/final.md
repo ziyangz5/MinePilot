@@ -146,7 +146,7 @@ $$
 L(\pmb{y},\pmb{\hat{y}})=\sum_{i=0}^c p_ilog(q_i)
 $$
 
-We use Adam as the optimizer with learning rate = 0.0002, and trained only 10 epochs with batch size 4 under RTX 2080 graphics cards. After 10 epochs, the validation accuracy reached around 85%.
+We use Adam as the optimizer with learning rate = 0.0002, and trained only 10 epochs with batch size 4 under RTX 2080 graphics cards. After 50 epochs, the validation accuracy reached around 85%.
 <br><br>
 **DQN**
 <br><br>
@@ -185,8 +185,22 @@ Since now the forward speed is various. The agent needs more information about s
 
 **Training**
 
-At first, we found it is very hard to train with continuos speed. Therefore, we applied the curriculum learning to help us. We still fixed the length of the road ($9\times 150$), but we adjust the density of the pillars. At first, we only put one pillar in front of our agent and trained the model for 50 epochs. Then, we set 11 pillars on the road, and trained it for 50 epochs. At last, we set 22 pillars on the road, and trained it for 100 epochs to get our final model.</div>
+At first, we found it is very hard to train with continuos speed. Therefore, we applied the curriculum learning to help us. We still fixed the length of the road ($9\times 150$), but we adjust the density of the pillars. At first, we only put one pillar in front of our agent and trained the model for 50 epochs. Then, we set 11 pillars on the road, and trained it for 50 epochs. At last, we set 22 pillars on the road, and trained it for 100 epochs to get our final model. <br>
 About our hyperparameter, we set our replay memory of DQN to 10000, and use Adam as our optimizer with learning rate = 0.00045 and weight decay = 0.001. We set our $\gamma$ to $0.98$, and the $\epsilon$ is decreasing from $0.88$ to $0.05$. <br>
 
 
 ## Evaluation
+
+#### **Segmentation Neural Network**
+
+For the SNN, we mainly look into two types of metrics: pixel-wise cross entropy loss, and pixel-wise accuracy.<br>
+We trained our for 50 epochs, and we find that the loss converged nicely:
+<div style="text-align:center"><img src="figures_f/f7.png"  width="750" height="500"/></div>
+
+We also tracked the pixel-wise accuracy given by $a=\frac{1}{mn}\sum_{i=0}^n\sum_{j=0}(y_{ij}==\hat{y}_{ij})$. The validation accuracy is a little bit noisy but it is increasing, and reached $86\%$ which is good enough for us.
+
+<div style="text-align:center"><img src="figures_f/f8.png" width="750" height="500"/></div>
+
+You can also visually see that the performance of SNN is good:
+
+<div style="text-align:center"><img src="figures_f/f9.png" /></div>
