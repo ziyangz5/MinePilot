@@ -169,6 +169,16 @@ R(s)=\left\{
 \end{aligned}
 \right.
 $$
+
 In this model, the forward speed is fixed at 0.35. When we increase this speed, the agent cannot adapt to the environment if there are obstacles because it cannot reduce its speed. The details can be found in [evaluation section](#evaluation).
+<br>
 
 #### **DQN with SNN and continuos speed**
+
+By studying the models we discussed above, we are able to find the best model among the models we trained. First, SNN is critical to this problem, since the DQN should focus on learning the best policy instead of image representation. Also, variable forward speed is required since the agent should reduce its speed if the density of obstacles is high, and increase its speed if there are less obstacles in order to drive as far as possible. Therefore, we combined the [DQN without SNN](dqn-without-snn) and [DQN with SNN (fixed forward speed)](dqn-with-snn-(fixed-forward-speed)) to get our final model. The action space and reward function are identical to DQN without SNN, so we will focus on what is different in our final model.
+
+**Network Structure**
+
+Since now the forward speed is various. The agent needs more information about speed. Therefore, instead of feeding the model a single segmented image. We provide the model two channels of images. One is the current state, another is the previous state. The segmented images go through a series of CNN. The result of CNN would be computed by FC with numerical speed jointly. We are using SELU as the activation function except the last layer.
+
+<div style="text-align:center"><img src="figures_f/f6.png" /></div>
